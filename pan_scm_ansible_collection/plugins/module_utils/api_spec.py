@@ -105,3 +105,76 @@ class ScmSpec:
                 required=True,
             ),
         )
+
+    @staticmethod
+    def address_group_spec():
+        return dict(
+            name=dict(
+                type='str',
+                required=True,
+            ),
+            description=dict(
+                type='str',
+                required=False,
+            ),
+            tag=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            dynamic=dict(
+                type='dict',
+                required=False,
+                options=dict(
+                    filter=dict(
+                        type='str',
+                        required=True,
+                    ),
+                ),
+            ),
+            static=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            folder=dict(
+                type='str',
+                required=False,
+            ),
+            snippet=dict(
+                type='str',
+                required=False,
+            ),
+            device=dict(
+                type='str',
+                required=False,
+            ),
+            provider=dict(
+                type='dict',
+                required=True,
+                options=dict(
+                    client_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    client_secret=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    tsg_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    log_level=dict(
+                        type='str',
+                        required=False,
+                        default='INFO',
+                    ),
+                ),
+            ),
+            state=dict(
+                type='str',
+                choices=['present', 'absent'],
+                required=True,
+            ),
+        )
