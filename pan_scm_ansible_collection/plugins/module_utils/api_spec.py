@@ -178,3 +178,92 @@ class ScmSpec:
                 required=True,
             ),
         )
+
+    @staticmethod
+    def application_spec() -> Dict[str, Any]:
+        """Returns Ansible module spec for application objects."""
+        return dict(
+            name=dict(
+                type='str',
+                required=True,
+            ),
+            category=dict(
+                type='str',
+                required=False,
+            ),
+            subcategory=dict(
+                type='str',
+                required=False,
+            ),
+            technology=dict(
+                type='str',
+                required=False,
+            ),
+            risk=dict(
+                type='str',
+                required=False,
+            ),
+            description=dict(
+                type='str',
+                required=False,
+            ),
+            default_timeout=dict(
+                type='int',
+                required=False,
+            ),
+            folder=dict(
+                type='str',
+                required=False,
+            ),
+            snippet=dict(
+                type='str',
+                required=False,
+            ),
+            tag=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            ports=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            transfers_files=dict(
+                type='bool',
+                required=False,
+            ),
+            has_known_vulnerabilities=dict(
+                type='bool',
+                required=False,
+            ),
+            provider=dict(
+                type='dict',
+                required=True,
+                options=dict(
+                    client_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    client_secret=dict(
+                        type='str',
+                        required=True,
+                        no_log=True,
+                    ),
+                    tsg_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    log_level=dict(
+                        type='str',
+                        required=False,
+                        default='INFO',
+                    ),
+                ),
+            ),
+            state=dict(
+                type='str',
+                choices=['present', 'absent'],
+                required=True,
+            ),
+        )
