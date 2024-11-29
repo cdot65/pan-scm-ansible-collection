@@ -520,3 +520,114 @@ class ScmSpec:
                 required=True,
             ),
         )
+
+    @staticmethod
+    def tag_spec() -> Dict[str, Any]:
+        """
+        Returns Ansible module spec for tag objects.
+
+        This method defines the structure and requirements for tag-related
+        parameters in SCM modules.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the module specification with
+                           parameter definitions and their requirements.
+        """
+        return dict(
+            name=dict(
+                type='str',
+                required=True,
+            ),
+            color=dict(
+                type='str',
+                required=False,
+                choices=[
+                    'Azure Blue',
+                    'Black',
+                    'Blue',
+                    'Blue Gray',
+                    'Blue Violet',
+                    'Brown',
+                    'Burnt Sienna',
+                    'Cerulean Blue',
+                    'Chestnut',
+                    'Cobalt Blue',
+                    'Copper',
+                    'Cyan',
+                    'Forest Green',
+                    'Gold',
+                    'Gray',
+                    'Green',
+                    'Lavender',
+                    'Light Gray',
+                    'Light Green',
+                    'Lime',
+                    'Magenta',
+                    'Mahogany',
+                    'Maroon',
+                    'Medium Blue',
+                    'Medium Rose',
+                    'Medium Violet',
+                    'Midnight Blue',
+                    'Olive',
+                    'Orange',
+                    'Orchid',
+                    'Peach',
+                    'Purple',
+                    'Red',
+                    'Red Violet',
+                    'Red-Orange',
+                    'Salmon',
+                    'Thistle',
+                    'Turquoise Blue',
+                    'Violet Blue',
+                    'Yellow',
+                    'Yellow-Orange',
+                ],
+            ),
+            comments=dict(
+                type='str',
+                required=False,
+            ),
+            folder=dict(
+                type='str',
+                required=False,
+            ),
+            snippet=dict(
+                type='str',
+                required=False,
+            ),
+            device=dict(
+                type='str',
+                required=False,
+            ),
+            provider=dict(
+                type='dict',
+                required=True,
+                options=dict(
+                    client_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    client_secret=dict(
+                        type='str',
+                        required=True,
+                        no_log=True,
+                    ),
+                    tsg_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    log_level=dict(
+                        type='str',
+                        required=False,
+                        default='INFO',
+                    ),
+                ),
+            ),
+            state=dict(
+                type='str',
+                choices=['present', 'absent'],
+                required=True,
+            ),
+        )
