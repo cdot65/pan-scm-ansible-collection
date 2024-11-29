@@ -18,7 +18,7 @@
         name: "Test_Address_Netmask"
         description: "An address object with ip_netmask"
         ip_netmask: "192.168.1.0/24"
-        folder: "Test_Folder"
+        folder: "Texas"
         state: "present"
 
     - name: Create an address object with ip_range
@@ -27,7 +27,7 @@
         name: "Test_Address_Range"
         description: "An address object with ip_range"
         ip_range: "192.168.2.1-192.168.2.254"
-        folder: "Test_Folder"
+        folder: "Texas"
         state: "present"
 
     - name: Create an address object with fqdn
@@ -36,7 +36,7 @@
         name: "Test_Address_FQDN"
         description: "An address object with fqdn"
         fqdn: "example.com"
-        folder: "Test_Folder"
+        folder: "Texas"
         state: "present"
 
     - name: Update the address object with new description
@@ -45,12 +45,16 @@
         name: "Test_Address_Netmask"
         description: "Updated description for netmask address"
         ip_netmask: "192.168.1.0/24"
-        folder: "Test_Folder"
+        folder: "Texas"
         state: "present"
 
-    - name: Delete the address object
+    - name: Clean up the address object
       cdot65.scm.address:
         provider: "{{ provider }}"
-        name: "Test_Address_Range"
-        folder: "Test_Folder"
+        name: "{{ item }}"
+        folder: "Texas"
         state: "absent"
+      loop:
+        - "Test_Address_FQDN"
+        - "Test_Address_Range"
+        - "Test_Address_Netmask"
