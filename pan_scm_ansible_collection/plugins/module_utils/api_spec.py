@@ -450,3 +450,73 @@ class ScmSpec:
                 required=True,
             ),
         )
+
+    @staticmethod
+    def service_group_spec() -> Dict[str, Any]:
+        """
+        Returns Ansible module spec for service group objects.
+
+        This method defines the structure and requirements for service group-related
+        parameters in SCM modules.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the module specification with
+                           parameter definitions and their requirements.
+        """
+        return dict(
+            name=dict(
+                type='str',
+                required=True,
+            ),
+            members=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            tag=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            folder=dict(
+                type='str',
+                required=False,
+            ),
+            snippet=dict(
+                type='str',
+                required=False,
+            ),
+            device=dict(
+                type='str',
+                required=False,
+            ),
+            provider=dict(
+                type='dict',
+                required=True,
+                options=dict(
+                    client_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    client_secret=dict(
+                        type='str',
+                        required=True,
+                        no_log=True,
+                    ),
+                    tsg_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    log_level=dict(
+                        type='str',
+                        required=False,
+                        default='INFO',
+                    ),
+                ),
+            ),
+            state=dict(
+                type='str',
+                choices=['present', 'absent'],
+                required=True,
+            ),
+        )
