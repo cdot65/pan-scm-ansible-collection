@@ -29,6 +29,167 @@ from ansible_collections.cdot65.scm.plugins.module_utils.serialize_response impo
 from scm.config.objects.address import Address
 from scm.exceptions import NotFoundError
 
+DOCUMENTATION = r'''
+---
+module: address_group
+
+short_description: Manage address group objects in SCM.
+
+version_added: "0.1.0"
+
+description:
+    - Manage address group objects within Strata Cloud Manager (SCM).
+    - Supports both static and dynamic address groups.
+    - Ensures that exactly one of 'static' or 'dynamic' is provided.
+    - Ensures that exactly one of 'folder', 'snippet', or 'device' is provided.
+
+options:
+    name:
+        description: The name of the address group.
+        required: true
+        type: str
+    description:
+        description: Description of the address group.
+        required: false
+        type: str
+    tag:
+        description: List of tags associated with the address group.
+        required: false
+        type: list
+        elements: str
+    fqdn:
+        description: Fully Qualified Domain Name (FQDN) of the address.
+        required: false
+        type: str
+    ip_netmask:
+        description: IP address and netmask in CIDR notation.
+        required: false
+        type: str
+    ip_range:
+        description: IP address range in CIDR notation.
+        required: false
+        type: str
+    folder:
+        description: The folder in which the resource is defined.
+        required: false
+        type: str
+    snippet:
+        description: The snippet in which the resource is defined.
+        required: false
+        type: str
+    device:
+        description: The device in which the resource is defined.
+        required: false
+        type: str
+    provider:
+        description: Authentication credentials.
+        required: true
+        type: dict
+        suboptions:
+            client_id:
+                description: Client ID for authentication.
+                required: true
+                type: str
+            client_secret:
+                description: Client secret for authentication.
+                required: true
+                type: str
+            tsg_id:
+                description: Tenant Service Group ID.
+                required: true
+                type: str
+            log_level:
+                description: Log level for the SDK.
+                required: false
+                type: str
+                default: "INFO"
+    state:
+        description: Desired state of the address group object.
+        required: true
+        type: str
+        choices:
+          - present
+          - absent
+
+author:
+    - Calvin Remsburg (@cdot65)
+'''
+
+EXAMPLES = r'''
+---
+- name: Manage Address Objects in Strata Cloud Manager
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vault.yaml
+  vars:
+    provider:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret }}"
+      tsg_id: "{{ tsg_id }}"
+      log_level: "INFO"
+  tasks:
+
+    - name: Create an address object with ip_netmask
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_Netmask"
+        description: "An address object with ip_netmask"
+        ip_netmask: "192.168.1.0/24"
+        folder: "Texas"
+        state: "present"
+
+    - name: Create an address object with ip_range
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_Range"
+        description: "An address object with ip_range"
+        ip_range: "192.168.2.1-192.168.2.254"
+        folder: "Texas"
+        state: "present"
+
+    - name: Create an address object with fqdn
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_FQDN"
+        description: "An address object with fqdn"
+        fqdn: "example.com"
+        folder: "Texas"
+        state: "present"
+
+    - name: Update the address object with new description
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_Netmask"
+        description: "Updated description for netmask address"
+        ip_netmask: "192.168.1.0/24"
+        folder: "Texas"
+        state: "present"
+
+    - name: Clean up the address object
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "{{ item }}"
+        folder: "Texas"
+        state: "absent"
+      loop:
+        - "Test_Address_FQDN"
+        - "Test_Address_Range"
+        - "Test_Address_Netmask"
+'''
+
+RETURN = r'''
+address:
+    description: Details about the address object.
+    returned: when state is present
+    type: dict
+    sample:
+        id: "123e4567-e89b-12d3-a456-426655440000"
+        name: "Test Address"
+        fqdn: "test_network2.example.com"
+        folder: "Shared"
+'''
+
 
 def build_address_data(module_params):
     """
