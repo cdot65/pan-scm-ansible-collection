@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "pan-scm-ansible-collection"
+version = "0.1.0"
+description = "Ansible Collection for Strata Cloud Manager"
+authors = ["cdot65 <calvin@cdot.io>"]
+license = "Apache2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+ansible = "^11.0.0"
+pan-scm-sdk = "^0.3.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+flake8 = "^7.1.1"
+typer = "^0.14.0"
+mypy = "^1.13.0"
+yamllint = "^1.35.1"
+flynt = "^1.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 160
+fast = true
+skip-string-normalization = true
+extend-exclude = "pan_scm_ansible_collection"

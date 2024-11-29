@@ -1,0 +1,73 @@
+# Ignore generated schema
+swagger.json
+schema.json
+reference-schema.json
+
+# Tags
+.tags
+.tags1
+
+# User level pre-commit hooks
+pre-commit-user
+
+# Python & setuptools
+__pycache__
+/build
+/deb-build
+/reprepro
+/rpm-build
+/tar-build
+/setup-bundle-build
+/dist
+/*.egg-info
+*.py[c,o]
+/.eggs
+
+# Testing
+.cache
+.coverage
+.tox
+coverage.xml
+htmlcov
+pep8.txt
+scratch
+testem.log
+.pytest_cache/
+.mypy_cache/
+
+# Mac OS X
+*.DS_Store
+
+# VSCode
+.vscode/
+
+# Pycharm
+.idea/
+
+# Editors
+*.sw[poj]
+*~
+
+# Ansible
+**/*.retry
+
+# Other
+env/*
+nohup.out
+reports
+*.bak
+*.bak[0-9]
+*.dot
+*.log
+*.log.[0-9]
+*.results
+local/
+*.mo
+requirements/vendor
+.i18n_built
+.idea/*
+*credentials*.y*ml*
+venv/*
+
+# Ansible module tests
+/dist/*.tar.gz
