@@ -1,0 +1,40 @@
+---
+- name: Manage Application Groups in Strata Cloud Manager
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vault.yaml
+  vars:
+    provider:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret }}"
+      tsg_id: "{{ tsg_id }}"
+      log_level: "INFO"
+  tasks:
+    - name: Create web applications group
+      cdot65.scm.application_group:
+        provider: "{{ provider }}"
+        name: "web-apps"
+        members:
+          - "ssl"
+          - "web-browsing"
+        folder: "Texas"
+        state: "present"
+
+    - name: Update web applications group membership
+      cdot65.scm.application_group:
+        provider: "{{ provider }}"
+        name: "web-apps"
+        members:
+          - "ssl"
+          - "web-browsing"
+          - "dns-base"
+        folder: "Texas"
+        state: "present"
+
+    - name: Remove application group
+      cdot65.scm.application_group:
+        provider: "{{ provider }}"
+        name: "web-apps"
+        folder: "Texas"
+        state: "absent"
