@@ -1,0 +1,46 @@
+---
+- name: Manage Application Objects in Strata Cloud Manager
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vault.yaml
+  vars:
+    provider:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret }}"
+      tsg_id: "{{ tsg_id }}"
+      log_level: "INFO"
+  tasks:
+    - name: Create a custom application
+      cdot65.scm.application:
+        provider: "{{ provider }}"
+        name: "custom-app"
+        category: "business-systems"
+        subcategory: "database"
+        technology: "client-server"
+        risk: 3
+        description: "Custom database application"
+        ports:
+          - "tcp/1521"
+        folder: "Texas"
+        transfers_files: true
+        state: "present"
+
+    - name: Update application risk level
+      cdot65.scm.application:
+        provider: "{{ provider }}"
+        name: "custom-app"
+        category: "business-systems"
+        subcategory: "database"
+        technology: "client-server"
+        risk: 4
+        folder: "Texas"
+        has_known_vulnerabilities: true
+        state: "present"
+
+    - name: Remove application
+      cdot65.scm.application:
+        provider: "{{ provider }}"
+        name: "custom-app"
+        folder: "Texas"
+        state: "absent"
