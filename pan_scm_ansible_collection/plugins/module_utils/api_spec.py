@@ -332,3 +332,191 @@ class ScmSpec:
                 required=True,
             ),
         )
+
+    @staticmethod
+    def service_spec() -> Dict[str, Any]:
+        """Returns Ansible module spec for service objects."""
+        return dict(
+            name=dict(
+                type='str',
+                required=True,
+            ),
+            protocol=dict(
+                type='dict',
+                required=False,
+                options=dict(
+                    tcp=dict(
+                        type='dict',
+                        required=False,
+                        options=dict(
+                            port=dict(
+                                type='str',
+                                required=True,
+                            ),
+                            override=dict(
+                                type='dict',
+                                required=False,
+                                options=dict(
+                                    timeout=dict(
+                                        type='int',
+                                        required=False,
+                                        default=3600,
+                                    ),
+                                    halfclose_timeout=dict(
+                                        type='int',
+                                        required=False,
+                                        default=120,
+                                    ),
+                                    timewait_timeout=dict(
+                                        type='int',
+                                        required=False,
+                                        default=15,
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    udp=dict(
+                        type='dict',
+                        required=False,
+                        options=dict(
+                            port=dict(
+                                type='str',
+                                required=True,
+                            ),
+                            override=dict(
+                                type='dict',
+                                required=False,
+                                options=dict(
+                                    timeout=dict(
+                                        type='int',
+                                        required=False,
+                                        default=30,
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            description=dict(
+                type='str',
+                required=False,
+            ),
+            tag=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            folder=dict(
+                type='str',
+                required=False,
+            ),
+            snippet=dict(
+                type='str',
+                required=False,
+            ),
+            device=dict(
+                type='str',
+                required=False,
+            ),
+            provider=dict(
+                type='dict',
+                required=True,
+                options=dict(
+                    client_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    client_secret=dict(
+                        type='str',
+                        required=True,
+                        no_log=True,
+                    ),
+                    tsg_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    log_level=dict(
+                        type='str',
+                        required=False,
+                        default='INFO',
+                    ),
+                ),
+            ),
+            state=dict(
+                type='str',
+                choices=['present', 'absent'],
+                required=True,
+            ),
+        )
+
+    @staticmethod
+    def service_group_spec() -> Dict[str, Any]:
+        """
+        Returns Ansible module spec for service group objects.
+
+        This method defines the structure and requirements for service group-related
+        parameters in SCM modules.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the module specification with
+                           parameter definitions and their requirements.
+        """
+        return dict(
+            name=dict(
+                type='str',
+                required=True,
+            ),
+            members=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            tag=dict(
+                type='list',
+                elements='str',
+                required=False,
+            ),
+            folder=dict(
+                type='str',
+                required=False,
+            ),
+            snippet=dict(
+                type='str',
+                required=False,
+            ),
+            device=dict(
+                type='str',
+                required=False,
+            ),
+            provider=dict(
+                type='dict',
+                required=True,
+                options=dict(
+                    client_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    client_secret=dict(
+                        type='str',
+                        required=True,
+                        no_log=True,
+                    ),
+                    tsg_id=dict(
+                        type='str',
+                        required=True,
+                    ),
+                    log_level=dict(
+                        type='str',
+                        required=False,
+                        default='INFO',
+                    ),
+                ),
+            ),
+            state=dict(
+                type='str',
+                choices=['present', 'absent'],
+                required=True,
+            ),
+        )

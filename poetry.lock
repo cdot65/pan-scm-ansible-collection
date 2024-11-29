@@ -641,13 +641,13 @@ files = [
 
 [[package]]
 name = "pan-scm-sdk"
-version = "0.3.0"
+version = "0.3.1"
 description = "Python SDK for Palo Alto Networks Strata Cloud Manager."
 optional = false
 python-versions = "<4.0,>=3.10"
 files = [
-    {file = "pan_scm_sdk-0.3.0-py3-none-any.whl", hash = "sha256:619c5d77b797bbb0e7d5a58e76e5ac598821efe0e9d6f80f8e67604d7af39adb"},
-    {file = "pan_scm_sdk-0.3.0.tar.gz", hash = "sha256:230b745356ec8a313c0d23ca061c256a284b0a29faeba0420e52f8efd285bef1"},
+    {file = "pan_scm_sdk-0.3.1-py3-none-any.whl", hash = "sha256:cccf3241fb43c173840e076fc38c334cf2a31de2aa189353ca7ae046dde693e0"},
+    {file = "pan_scm_sdk-0.3.1.tar.gz", hash = "sha256:9bfe8242f594da86fcc15c2a7b70048b3e56b7a46ded4460185020166f5a15aa"},
 ]
 
 [package.dependencies]
@@ -1114,4 +1114,4 @@ dev = ["doc8", "flake8", "flake8-import-order", "rstcheck[sphinx]", "sphinx"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "96ddee0b4c2c4463e838c1e237a70385f32a8994512d080a126a7e3f05b372fa"
+content-hash = "86e91bbb4cc1e6ef2d8a7b1ae7541b50364f49fedcf9b4427aa0ab15572c939d"

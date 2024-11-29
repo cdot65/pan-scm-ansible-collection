@@ -1,0 +1,60 @@
+---
+- name: Manage Service Objects in Strata Cloud Manager
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vault.yaml
+  vars:
+    provider:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret }}"
+      tsg_id: "{{ tsg_id }}"
+      log_level: "INFO"
+  tasks:
+    - name: Create TCP service
+      cdot65.scm.service:
+        provider: "{{ provider }}"
+        name: "web-service"
+        protocol:
+          tcp:
+            port: "80,443"
+            override:
+              timeout: 30
+              halfclose_timeout: 10
+              timewait_timeout: 2
+        description: "Web service ports"
+        folder: "Texas"
+        state: "present"
+
+    - name: Create UDP service
+      cdot65.scm.service:
+        provider: "{{ provider }}"
+        name: "dns-service"
+        protocol:
+          udp:
+            port: "53"
+            override:
+              timeout: 30
+        description: "DNS service"
+        folder: "Texas"
+        state: "present"
+
+    - name: Update service
+      cdot65.scm.service:
+        provider: "{{ provider }}"
+        name: "web-service"
+        protocol:
+          tcp:
+            port: "80,443,8080"
+        folder: "Texas"
+        state: "present"
+
+    - name: Remove services
+      cdot65.scm.service:
+        provider: "{{ provider }}"
+        name: "{{ item }}"
+        folder: "Texas"
+        state: "absent"
+      loop:
+        - "web-service"
+        - "dns-service"
