@@ -49,9 +49,12 @@
         folder: "Texas"
         state: "present"
 
-    - name: Remove service
+    - name: Remove services
       cdot65.scm.service:
         provider: "{{ provider }}"
-        name: "web-service"
+        name: "{{ item }}"
         folder: "Texas"
         state: "absent"
+      loop:
+        - "web-service"
+        - "dns-service"
