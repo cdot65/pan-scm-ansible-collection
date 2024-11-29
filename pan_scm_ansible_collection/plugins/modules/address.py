@@ -5,19 +5,9 @@ from __future__ import absolute_import, division, print_function
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.cdot65.scm.plugins.module_utils.api_spec import ScmSpec  # noqa: F401
 from ansible_collections.cdot65.scm.plugins.module_utils.authenticate import get_scm_client  # noqa: F401
+from ansible_collections.cdot65.scm.plugins.module_utils.serialize_response import serialize_response  # noqa: F401
 from scm.config.objects.address import Address
 from scm.exceptions import NotFoundError
-
-
-def serialize_response(response):
-    """Convert response to Ansible-compatible format."""
-    if hasattr(response, 'model_dump'):
-        data = response.model_dump()
-        # Convert UUID to string
-        if 'id' in data and data['id']:
-            data['id'] = str(data['id'])
-        return data
-    return response
 
 
 def main():
