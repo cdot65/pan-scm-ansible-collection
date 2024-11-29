@@ -1,0 +1,36 @@
+---
+- name: Manage Tag Objects in Strata Cloud Manager
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vault.yaml
+  vars:
+    provider:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret }}"
+      tsg_id: "{{ tsg_id }}"
+      log_level: "INFO"
+  tasks:
+    - name: Create a new tag
+      cdot65.scm.tag:
+        provider: "{{ provider }}"
+        name: "Production"
+        color: "Blue"
+        comments: "Production environment tag"
+        folder: "Texas"
+        state: "present"
+
+    - name: Update tag color
+      cdot65.scm.tag:
+        provider: "{{ provider }}"
+        name: "Production"
+        color: "Red"
+        folder: "Texas"
+        state: "present"
+
+    - name: Remove tag
+      cdot65.scm.tag:
+        provider: "{{ provider }}"
+        name: "Production"
+        folder: "Texas"
+        state: "absent"
