@@ -1,0 +1,56 @@
+---
+- name: Manage Address Objects in Strata Cloud Manager
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vault.yaml
+  vars:
+    provider:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret }}"
+      tsg_id: "{{ tsg_id }}"
+      log_level: "INFO"
+  tasks:
+
+    - name: Create an address object with ip_netmask
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_Netmask"
+        description: "An address object with ip_netmask"
+        ip_netmask: "192.168.1.0/24"
+        folder: "Test_Folder"
+        state: "present"
+
+    - name: Create an address object with ip_range
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_Range"
+        description: "An address object with ip_range"
+        ip_range: "192.168.2.1-192.168.2.254"
+        folder: "Test_Folder"
+        state: "present"
+
+    - name: Create an address object with fqdn
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_FQDN"
+        description: "An address object with fqdn"
+        fqdn: "example.com"
+        folder: "Test_Folder"
+        state: "present"
+
+    - name: Update the address object with new description
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_Netmask"
+        description: "Updated description for netmask address"
+        ip_netmask: "192.168.1.0/24"
+        folder: "Test_Folder"
+        state: "present"
+
+    - name: Delete the address object
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "Test_Address_Range"
+        folder: "Test_Folder"
+        state: "absent"

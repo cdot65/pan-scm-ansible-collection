@@ -67,6 +67,7 @@ requirements/vendor
 .i18n_built
 .idea/*
 *credentials*.y*ml*
+*.vault_password
 venv/*
 
 # Ansible module tests
