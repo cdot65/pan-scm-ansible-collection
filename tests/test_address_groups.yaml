@@ -1,0 +1,82 @@
+---
+- name: Test Address Group Module
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vault.yaml
+  vars:
+    provider:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret }}"
+      tsg_id: "{{ tsg_id }}"
+      log_level: "INFO"
+  tasks:
+    - name: Create ansible_test_network1 address object with ip_netmask
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "ansible_test_network1"
+        description: "An address object with ip_netmask"
+        ip_netmask: "192.168.1.0/24"
+        folder: "Texas"
+        state: "present"
+
+    - name: Create ansible_test_network2 address object with ip_netmask
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "ansible_test_network2"
+        description: "An address object with ip_netmask"
+        ip_netmask: "192.168.2.0/24"
+        folder: "Texas"
+        state: "present"
+
+    - name: Create a static address group
+      cdot65.scm.address_group:
+        provider: "{{ provider }}"
+        name: "Test_Static_Group"
+        description: "A static address group"
+        static:
+          - "ansible_test_network1"
+          - "ansible_test_network2"
+        folder: "Texas"
+        state: "present"
+
+    - name: Create a dynamic address group
+      cdot65.scm.address_group:
+        provider: "{{ provider }}"
+        name: "Test_Dynamic_Group"
+        description: "A dynamic address group"
+        dynamic:
+          filter: "'tag1' or 'tag2'"
+        folder: "Texas"
+        state: "present"
+
+    - name: Update the static address group
+      cdot65.scm.address_group:
+        provider: "{{ provider }}"
+        name: "Test_Static_Group"
+        description: "An updated static address group"
+        static:
+          - "ansible_test_network1"
+        folder: "Texas"
+        state: "present"
+
+    - name: Delete the address groups
+      cdot65.scm.address_group:
+        provider: "{{ provider }}"
+        name: "{{ item }}"
+        folder: "Texas"
+        state: "absent"
+      loop:
+        - "Test_Static_Group"
+        - "Test_Dynamic_Group"
+
+
+    - name: Clean up the address objects
+      cdot65.scm.address:
+        provider: "{{ provider }}"
+        name: "{{ item }}"
+        folder: "Texas"
+        state: "absent"
+      loop:
+        - "ansible_test_network1"
+        - "ansible_test_network2"
